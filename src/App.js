@@ -16,7 +16,7 @@ const App = () => {
                     <Route path='/dialogs' component={Dialogs}/>
                     <Route path='/profile' component={Profile}/>
                 </div>
-                {/*<Profile />*/}
+                {/*<ProfileInfo />*/}
             </div>
         </BrowserRouter>
     );

@@ -1,5 +1,6 @@
 import profileReducer from "./profile-reducer";
-import dialogsReducer from "./sidebar-reducer";
+import dialogsReducer from "./dialogs-reducer";
+import sidebarReducer from "./sidebar-reducer";
 
 let store = {
     _state: {
@@ -7,8 +8,6 @@ let store = {
             posts: [
                 {id: 1, message: 'Hi, how are you?!', likesCount: 12},
                 {id: 2, message: 'This is post 2!', likesCount: 11},
-                {id: 3, message: 'This is post 3!', likesCount: 11},
-                {id: 4, message: 'This is post 4!', likesCount: 11},
             ],
             newPostText: 'some-text',
         },
@@ -38,10 +37,9 @@ let store = {
         this._callSubscriber = observer;
     },
     dispatch(action) {
-
         this._state.profilePage = profileReducer(this._state.profilePage, action);
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
-        this._state.sidebar = dialogsReducer(this._state.sidebar, action);
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action);
         this._callSubscriber(this._state);
     }
 };

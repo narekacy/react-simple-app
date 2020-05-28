@@ -1,8 +1,7 @@
 import React from 'react';
-import {addPostActionCreator} from "../../../redux/profile-reducer";
+import {addPostActionCreator, updateNewPostActionCreator} from "../../../redux/profile-reducer";
 import MyPosts from "./my-posts";
 import {connect} from "react-redux";
-import {updateNewMessageBodyCreator} from "../../../redux/dialogs-reducer";
 
 let mapStateToProps = (state) => {
     return {
@@ -14,11 +13,11 @@ let mapStateToProps = (state) => {
 let mapDispatchToProps = (dispatch) => {
     return {
         updateNewPostText: (text) => {
-            let action = updateNewMessageBodyCreator(text);
+            let action = updateNewPostActionCreator(text);
             return dispatch(action);
         },
         addPost: () => {
-            return dispatch(addPostActionCreator());;
+            return dispatch(addPostActionCreator());
         }
     }
 };

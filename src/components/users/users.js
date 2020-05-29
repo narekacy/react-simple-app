@@ -1,9 +1,16 @@
 import React from "react";
 import s from "./users.module.css";
+import * as axios from "axios";
 
 let Users = (props) => {
 
-    if(props.length === 0) {
+    if(props.users.length === 0) {
+        // axios.get("https://social-network.samuraijs.com/api/1.0/users")
+        //     .then(response => {
+        //         debugger;
+        //         props.setUsers();
+        // });
+
         props.setUsers(
             [
                 {
@@ -45,7 +52,7 @@ let Users = (props) => {
                     fullName: 'Edgar',
                     status: 'boss',
                     location: {city: 'Tbilisi', country: 'Georgia'}
-                },
+                }
             ],
         );
     }

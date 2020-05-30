@@ -28,7 +28,8 @@ let Users = (props) => {
                     <span>
                         <div>
                             <img src={u.photos.small !== null ? u.photos.small : defaultAvatar}
-                                 className={s.userPhoto}/>
+                                 className={s.userPhoto}
+                            />
                         </div>
                         <div>
                             {u.followed

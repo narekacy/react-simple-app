@@ -8,22 +8,19 @@ import {
     unFollow
 } from "../../redux/users-reducer";
 import React from "react";
-import * as axios from "axios";
 import Users from "./users";
 import Preloader from "../common/pre-loader";
+import {usersAPI} from "../../api/api";
 
 class UsersComponent extends React.Component {
-
     componentDidMount() {
         if (this.props.users.length === 0) {
             this.props.setIsFetching(true);
-            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-                withCredentials: true
-            })
+            usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
                 .then(response => {
                     this.props.setIsFetching(false);
-                    this.props.setUsers(response.data.items);
-                    this.props.setUsersTotalCount(response.data.totalCount);
+                    this.props.setUsers(response.items);
+                    this.props.setUsersTotalCount(response.totalCount);
                 });
         }
     }
@@ -31,12 +28,10 @@ class UsersComponent extends React.Component {
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
         this.props.setIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {
-            withCredentials: true
-        })
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
             .then(response => {
                 this.props.setIsFetching(false);
-                this.props.setUsers(response.data.items);
+                this.props.setUsers(response.items);
             });
 
     };

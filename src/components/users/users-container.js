@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {
-    follow,
+    follow, getUsers, getUsersThunkCreator,
     setCurrentPage,
     setIsFetching,
     setUsers,
@@ -10,30 +10,14 @@ import {
 import React from "react";
 import Users from "./users";
 import Preloader from "../common/pre-loader";
-import {usersAPI} from "../../api/api";
 
 class UsersComponent extends React.Component {
     componentDidMount() {
-        if (this.props.users.length === 0) {
-            this.props.setIsFetching(true);
-            usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-                .then(response => {
-                    this.props.setIsFetching(false);
-                    this.props.setUsers(response.items);
-                    this.props.setUsersTotalCount(response.totalCount);
-                });
-        }
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.setCurrentPage(pageNumber);
-        this.props.setIsFetching(true);
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(response => {
-                this.props.setIsFetching(false);
-                this.props.setUsers(response.items);
-            });
-
+        this.props.getUsers(pageNumber, this.props.pageSize);
     };
 
     render() {
@@ -48,9 +32,7 @@ class UsersComponent extends React.Component {
                     users={this.props.users}
                     follow={this.props.follow}
                     unFollow={this.props.unFollow}
-                    toggleFollowingProgress={this.props.toggleFollowingProgress}
                     followingInProgress={this.props.followingInProgress}
-
                 />
             </>
         )
@@ -69,6 +51,6 @@ let mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-    follow, unFollow, setUsers, setCurrentPage,
-    setUsersTotalCount, setIsFetching, toggleFollowingProgress
+    follow, unFollow, setCurrentPage,
+    toggleFollowingProgress, getUsers
 })(UsersComponent);

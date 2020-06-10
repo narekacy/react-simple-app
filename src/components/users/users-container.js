@@ -1,15 +1,15 @@
 import {connect} from "react-redux";
 import {
-    follow, getUsers, getUsersThunkCreator,
+    follow, getUsers,
     setCurrentPage,
-    setIsFetching,
-    setUsers,
-    setUsersTotalCount, toggleFollowingProgress,
+    toggleFollowingProgress,
     unFollow
 } from "../../redux/users-reducer";
 import React from "react";
 import Users from "./users";
 import Preloader from "../common/pre-loader";
+import {withAuthRedirect} from "../../hoc/with-auth-redirect";
+import {compose} from "redux";
 
 class UsersComponent extends React.Component {
     componentDidMount() {
@@ -50,7 +50,7 @@ let mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, {
+export default compose(withAuthRedirect, connect(mapStateToProps, {
     follow, unFollow, setCurrentPage,
     toggleFollowingProgress, getUsers
-})(UsersComponent);
+})(UsersComponent));
